@@ -108,9 +108,9 @@ class XLSBook(BookReader):
             raise ValueError("%s cannot be found" % sheet_name)
         return self.read_sheet(sheet)
 
-    def read_all(self):
+    def read_all(self, **kwargs):
         result = OrderedDict()
-        self._native_book = self._get_book()
+        self._native_book = self._get_book(**kwargs)
         for sheet in self._native_book.sheets():
             if self.skip_hidden_sheets and sheet.visibility != 0:
                 continue
