@@ -122,20 +122,26 @@ class XLSBook(BookReader):
         sheet = XLSheet(native_sheet, **self._keywords)
         return {sheet.name: sheet.to_array()}
 
-    def _get_book(self, on_demand=False):
+    def _get_book(self, on_demand=False, **kwargs):
         if self._file_name:
-            xls_book = xlrd.open_workbook(self._file_name, on_demand=on_demand)
+            xls_book = xlrd.open_workbook(
+                self._file_name,
+                on_demand=on_demand,
+                **kwargs
+            )
         elif self._file_stream:
             xls_book = xlrd.open_workbook(
                 None,
                 file_contents=self._file_stream.getvalue(),
-                on_demand=on_demand
+                on_demand=on_demand,
+                **kwargs
             )
         elif self._file_content is not None:
             xls_book = xlrd.open_workbook(
                 None,
                 file_contents=self._file_content,
-                on_demand=on_demand
+                on_demand=on_demand,
+                **kwargs
             )
         else:
             raise IOError("No valid file name or file content found.")
